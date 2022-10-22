@@ -1,6 +1,7 @@
 import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
 import Header from "./components/Header";
 import TopBar from "./components/TopBar";
+import Trending from "./components/Trending";
 
 const theme = createTheme({
   palette: {
@@ -26,6 +27,7 @@ function App() {
         <CssBaseline />
         <TopBar />
         <Header />
+        <Trending/>
       </ThemeProvider>
     </div>
   );
