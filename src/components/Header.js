@@ -1,10 +1,8 @@
 import {
   Box,
-  Button,
   IconButton,
   Input,
   InputAdornment,
-  TextField,
 } from "@mui/material";
 import React from "react";
 import { BiCameraMovie, BiSearchAlt } from "react-icons/bi";
