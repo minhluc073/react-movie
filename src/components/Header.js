@@ -4,10 +4,21 @@ import {
   Input,
   InputAdornment,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { BiCameraMovie, BiSearchAlt } from "react-icons/bi";
 
-const Header = () => {
+const Header = ({setSearch}) => {
+    const [searchValue, setSearchValue] = useState("");
+
+    const handleSearchChange = (e) => {
+      setSearchValue(e.target.value);
+    };
+
+    const handleSearchSubmit = (e) => {
+      e.preventDefault();
+      setSearch(searchValue)
+      setSearchValue('')
+    };
   return (
     <div
       id="poster"
@@ -18,6 +29,8 @@ const Header = () => {
       }}
     >
       <Box
+        id="form"
+        component="form"
         sx={{
           backgroundColor: "secondary.main",
           boxShadow:
@@ -29,8 +42,12 @@ const Header = () => {
           fontSize: "1.5rem",
           display: "flex",
         }}
+        onSubmit={handleSearchSubmit}
       >
         <Input
+          value={searchValue}
+          onChange={handleSearchChange}
+          autoFocus={true}
           startAdornment={
             <InputAdornment position="start">
               <BiCameraMovie style={{ color: "rgba(255,255,255,0.8)" }} />
@@ -56,7 +73,7 @@ const Header = () => {
             backgroundColor: "secondary.dark",
           }}
         >
-          <IconButton>
+          <IconButton type="submit">
             <BiSearchAlt
               style={{ fontSize: "inherit", color: "rgba(255,255,255,0.8)" }}
             />

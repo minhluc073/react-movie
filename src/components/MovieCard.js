@@ -7,9 +7,9 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import cinemaPoster from "../images/cinema_poster.jpg";
 
-
-const MovieCard = ({ movie }) => {
+const MovieCard = ({ movie,marg }) => {
   const [movieInfo, setMovieInfo] = useState(null);
   useEffect(() => {
     setMovieInfo((prev) => ({
@@ -17,22 +17,22 @@ const MovieCard = ({ movie }) => {
       title: movie.title ? movie.title : movie.name,
       poster: movie.poster_path,
       date: movie.release_date ? movie.release_date : movie.first_air_date,
-      vote:movie.vote_average?movie.vote_average/2:0
+      vote: movie.vote_average ? movie.vote_average / 2 : 0,
+      vote_count: movie.vote_count ? movie.vote_count : 0,
     }));
-    console.log(Math.round(movie.vote_average / 2));
   }, [movie]);
 
   return (
     <>
       {movieInfo !== null && (
-        <Box>
+        <Box sx={{ scrollSnapAlign: "center" }}>
           <Card
             variant="outlined"
             sx={{
               boxShadow: 3,
-              mx: 1,
-              maxWidth: "15rem",
-              width: "15rem",
+              mx: marg,
+              maxWidth: "16rem",
+              width: "16rem",
               height: "21rem",
               backgroundColor: "secondary.dark",
             }}
@@ -45,7 +45,11 @@ const MovieCard = ({ movie }) => {
                 objectPosition: "0 95%",
                 height: "16rem",
               }}
-              image={`https://image.tmdb.org/t/p/w500${movieInfo.poster}`}
+              image={`${
+                movieInfo.poster
+                  ? `https://image.tmdb.org/t/p/w500${movieInfo.poster}`
+                  : cinemaPoster
+              }`}
             />
             <CardContent>
               <Typography
@@ -63,16 +67,27 @@ const MovieCard = ({ movie }) => {
               <Box
                 sx={{ display: "flex", alignItems: "flex-start", opacity: 0.8 }}
               >
-                <Typography variant="body2" component="span" sx={{color:"secondary.light"}}>
-                  {movieInfo.date && movieInfo.date}
+                <Typography
+                  variant="body2"
+                  component="span"
+                  sx={{ color: "secondary.light" }}
+                >
+                  {movieInfo.date ? movieInfo.date : "Unknown Date"}
                 </Typography>
                 <Rating
-                  sx={{ mx: 1 }}
+                  sx={{ ml: 1 }}
                   name="read-only"
                   value={movieInfo.vote}
                   size="small"
                   readOnly
                 />
+                <Typography
+                  variant="body2"
+                  component="span"
+                  sx={{ color: "secondary.light" }}
+                >
+                  ({movieInfo.vote_count ? movieInfo.vote_count: "0"})
+                </Typography>
               </Box>
             </CardContent>
           </Card>

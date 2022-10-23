@@ -84,7 +84,6 @@ const TopBar = () => {
               <Button
                 key={page}
                 onClick={() => {
-                  console.log("vlose nav");
                 }}
                 sx={{ color: "inherit", display: "block" }}
               >

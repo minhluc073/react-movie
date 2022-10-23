@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500&display=swap');
 
+body {
+  background-color: #A5C9CA !important;
+  min-height: 100vh !important;
+}
+
 #search-input::before {
   border: none;
 }
@@ -9,7 +14,7 @@
   background: linear-gradient(
     90deg,
     rgba(255, 255, 255, 0) 0%,
-    rgba(2, 0, 36, 0.9) 100%
+    rgba(2, 0, 36, 0.7) 40%
   );
 }
 

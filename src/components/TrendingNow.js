@@ -1,11 +1,8 @@
-import { Box,  Container, IconButton, Typography } from "@mui/material";
+import { Box, Container, IconButton, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Movie from "./MovieCard";
-import { FcNext } from "react-icons/fc";
-
-const TMDB_API_TOKEN =
-  "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2M2VlZWNhMzNlMjlkZDFjNTQwNzU0ZjQ2MDI0MjBkYiIsInN1YiI6IjYzNTNiMzgyNTZiOWY3MDA3ZTJlZDc4YiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.1-28aCsl_Dpfh7RyYzJLehXZxWbIvWfUYQnCJwqACmE";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
 // const trends = [
 //   "Halloween Ends",
@@ -22,11 +19,9 @@ const TMDB_API_TOKEN =
 //   "The Stranger",
 // ];
 
-const Trending = () => {
+const TrendingNow = () => {
   const [movies, setMovies] = useState([]);
 
-  axios.defaults.headers.common["Authorization"] = `Bearer ${TMDB_API_TOKEN}`;
-  axios.defaults.headers.get["Content-Type"] = "application/json";
   useEffect(() => {
     axios.get("https://api.themoviedb.org/3/trending/all/week").then((res) => {
       setMovies(res.data.results);
@@ -35,22 +30,22 @@ const Trending = () => {
 
   const handleScrollLeft = () => {
     document.getElementById("trending-cont").scrollLeft += Math.min(
-      document.body.clientWidth / 2,
+      document.body.clientWidth * 0.9,
       500
     );
   };
 
   const handleScrollRight = () => {
     document.getElementById("trending-cont").scrollLeft -= Math.min(
-      document.body.clientWidth / 2,
+      document.body.clientWidth * 0.9,
       500
     );
   };
 
   return (
     <Container maxWidth="lg" sx={{ p: 0 }}>
-      <Typography variant="h3" sx={{ m: 2 }} className="oswald-600">
-        Trending Movies
+      <Typography variant="h4" sx={{ m: 2 }} className="oswald-600">
+        Trending Now
       </Typography>
       <Container
         sx={{
@@ -63,10 +58,12 @@ const Trending = () => {
           sx={{
             width: "100%",
             height: "100%",
-            overflow: "auto",
+            overflowX: "scroll",
             display: "flex",
             scrollBehavior: "smooth",
+            scrollSnapType: "x mandatory",
             my: 2,
+            px: 3,
           }}
           id="trending-cont"
         >
@@ -78,30 +75,38 @@ const Trending = () => {
               left: 0,
               height: "100%",
               transform: "rotate(180deg)",
+              pl: 1,
             }}
           >
             <IconButton
-              sx={{ height: "100%", px: 2 }}
+              sx={{ height: "100%", color: "primary.contrastText", px: 2 }}
               onClick={handleScrollRight}
             >
-              <FcNext />
+              <NavigateNextIcon />
             </IconButton>
           </Box>
           {movies.map((movie) => (
-            <Movie movie={movie} />
+            <Movie key={movie.id} marg={2} movie={movie} />
           ))}
           <Box
             className="overlay-button"
-            sx={{ position: "absolute", top: 0, right: 0, height: "100%" }}
+            sx={{
+              position: "absolute",
+              top: 0,
+              right: 0,
+              height: "100%",
+              pl: 1,
+            }}
           >
             <IconButton
               sx={{
                 height: "100%",
+                color: "primary.contrastText",
                 px: 2,
               }}
               onClick={handleScrollLeft}
             >
-              <FcNext />
+              <NavigateNextIcon />
             </IconButton>
           </Box>
         </Box>
@@ -110,4 +115,4 @@ const Trending = () => {
   );
 };
 
-export default Trending;
+export default TrendingNow;
