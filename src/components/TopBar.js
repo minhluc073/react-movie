@@ -4,6 +4,7 @@ import {
   Button,
   Container,
   IconButton,
+  Link as LinkComp,
   Menu,
   MenuItem,
   Toolbar,
@@ -11,8 +12,7 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
-
-const pages = ["About", "Contact", "Github"];
+import { Link } from "react-router-dom";
 
 const TopBar = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
@@ -45,7 +45,9 @@ const TopBar = () => {
               textDecoration: "none",
             }}
           >
-            MOVIELOFT
+            <Link to="/" style={{ color: "inherit", textDecoration: "none" }}>
+              MOVIELOFT
+            </Link>
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "flex", sm: "none" } }}>
             <IconButton
@@ -71,26 +73,56 @@ const TopBar = () => {
                 display: { xs: "block", sm: "none" },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
+              <MenuItem>
+                <Typography textAlign="center">
+                  <Link
+                    to="/about"
+                    style={{ color: "inherit", textDecoration: "none" }}
+                  >
+                    ABOUT
+                  </Link>
+                </Typography>
+              </MenuItem>
+              <MenuItem>
+                <Typography textAlign="center">
+                  <LinkComp
+                    href="https://github.com/shinjith-dev/movie-loft"
+                    color="inherit"
+                    underline="none"
+                  >
+                    GITHUB
+                  </LinkComp>
+                </Typography>
+              </MenuItem>
             </Menu>
           </Box>
 
           <Box sx={{ display: { xs: "none", sm: "flex" } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={() => {
-                }}
-                sx={{ color: "inherit", display: "block" }}
+            <Button
+              onClick={() => {}}
+              sx={{ color: "inherit", display: "block" }}
+            >
+              <Link
+                to="/about"
+                style={{ color: "inherit", textDecoration: "none" }}
               >
-                {page}
-              </Button>
-            ))}
+                ABOUT
+              </Link>
+            </Button>
+            <Button
+              onClick={() => {}}
+              sx={{ color: "inherit", display: "block" }}
+            >
+              <LinkComp
+                href="https://github.com/shinjith-dev/movie-loft"
+                color="inherit"
+                underline="none"
+              >
+                GITHUB
+              </LinkComp>
+            </Button>
           </Box>
+
           <Typography
             variant="h5"
             noWrap
@@ -98,16 +130,18 @@ const TopBar = () => {
             href=""
             sx={{
               mr: 2,
-              display: { xs: 'flex', sm: 'none' },
+              display: { xs: "flex", sm: "none" },
               flexGrow: 1,
-              fontFamily: 'monospace',
+              fontFamily: "monospace",
               fontWeight: 700,
-              letterSpacing: '.1rem',
-              color: 'inherit',
-              textDecoration: 'none',
+              letterSpacing: ".1rem",
+              color: "inherit",
+              textDecoration: "none",
             }}
           >
-            MOVIELOFT
+            <Link to="/" style={{ color: "inherit", textDecoration: "none" }}>
+              MOVIELOFT
+            </Link>
           </Typography>
         </Toolbar>
       </Container>

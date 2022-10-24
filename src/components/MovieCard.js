@@ -11,6 +11,7 @@ import cinemaPoster from "../images/cinema_poster.jpg";
 
 const MovieCard = ({ movie,marg }) => {
   const [movieInfo, setMovieInfo] = useState(null);
+  
   useEffect(() => {
     setMovieInfo((prev) => ({
       ...prev,

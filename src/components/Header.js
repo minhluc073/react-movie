@@ -1,31 +1,30 @@
-import {
-  Box,
-  IconButton,
-  Input,
-  InputAdornment,
-} from "@mui/material";
+import { Box, IconButton, Input, InputAdornment } from "@mui/material";
 import React, { useState } from "react";
 import { BiCameraMovie, BiSearchAlt } from "react-icons/bi";
+import SearchFilter from "./SearchFilter";
 
-const Header = ({setSearch}) => {
-    const [searchValue, setSearchValue] = useState("");
+const Header = ({ searchVal = "", setSearch, height = 0}) => {
+  const [searchValue, setSearchValue] = useState(searchVal);
 
-    const handleSearchChange = (e) => {
-      setSearchValue(e.target.value);
-    };
+  const handleSearchChange = (e) => {
+    setSearchValue(e.target.value);
+  };
 
-    const handleSearchSubmit = (e) => {
-      e.preventDefault();
-      setSearch(searchValue)
-      setSearchValue('')
-    };
+  const handleSearchSubmit = (e) => {
+    if(e)
+    e.preventDefault();
+    setSearch(searchValue);
+  };
+
   return (
     <div
       id="poster"
       style={{
         display: "flex",
+        flexDirection:"column",
         alignItems: "center",
         justifyContent: "center",
+        height: `${height === 0 ? "min(80vh, 560px)" : "min(40vh, 280px)"}`,
       }}
     >
       <Box
@@ -79,7 +78,9 @@ const Header = ({setSearch}) => {
             />
           </IconButton>
         </Box>
+      
       </Box>
+      <SearchFilter change={()=>{setSearch(searchValue,true)}}/>
     </div>
   );
 };

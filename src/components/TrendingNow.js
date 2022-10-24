@@ -3,29 +3,25 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Movie from "./MovieCard";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
-
-// const trends = [
-//   "Halloween Ends",
-//   "Black Adam",
-//   "Bullet Train",
-//   "The School for Good and Evil",
-//   "Werewolf by Night",
-//   "Top Gun: Maverick",
-//   "Thor: Love and Thunder",
-//   "Spider-Man: No Way Home",
-//   "Hocus Pocus 2",
-//   "Hellraiser",
-//   "Rosaline",
-//   "The Stranger",
-// ];
+import MovieCardSkeleton from "./MovieCardSkeleton";
 
 const TrendingNow = () => {
   const [movies, setMovies] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const sleep = (milliseconds) => {
+    return new Promise((resolve) => setTimeout(resolve, milliseconds));
+  };
 
   useEffect(() => {
-    axios.get("https://api.themoviedb.org/3/trending/all/week").then((res) => {
-      setMovies(res.data.results);
-    });
+    setLoading(true);
+    axios
+      .get("https://api.themoviedb.org/3/trending/all/week")
+      .then(async (res) => {
+        setMovies(res.data.results);
+        await sleep(500);
+        setLoading(false);
+      });
   }, []);
 
   const handleScrollLeft = () => {
@@ -42,9 +38,17 @@ const TrendingNow = () => {
     );
   };
 
+  const toLoad = () => {
+    if (loading) return [...Array(20)].map((item,index) => <MovieCardSkeleton key={`trendingPreLoadSkelton_${index}`} marg={2} />);
+    else
+      return movies.map((movie) => (
+        <Movie key={movie.id} marg={2} movie={movie} />
+      ));
+  };
+
   return (
     <Container maxWidth="lg" sx={{ p: 0 }}>
-      <Typography variant="h4" sx={{ m: 2 }} className="oswald-600">
+      <Typography variant="h4" sx={{ m: 2 }} className="oswald-500">
         Trending Now
       </Typography>
       <Container
@@ -79,15 +83,17 @@ const TrendingNow = () => {
             }}
           >
             <IconButton
-              sx={{ height: "100%", color: "primary.contrastText", px: 2 }}
+              sx={{
+                height: "100%",
+                color: "primary.contrastText",
+                px: { xs: 1, sm: 2, md: 3 },
+              }}
               onClick={handleScrollRight}
             >
               <NavigateNextIcon />
             </IconButton>
           </Box>
-          {movies.map((movie) => (
-            <Movie key={movie.id} marg={2} movie={movie} />
-          ))}
+          {toLoad()}
           <Box
             className="overlay-button"
             sx={{
@@ -102,7 +108,7 @@ const TrendingNow = () => {
               sx={{
                 height: "100%",
                 color: "primary.contrastText",
-                px: 2,
+                px: { xs: 1, sm: 2, md: 3 },
               }}
               onClick={handleScrollLeft}
             >
