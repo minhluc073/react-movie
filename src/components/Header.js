@@ -20,7 +20,7 @@ const Header = ({ searchVal = "", setSearch, height = 0}) => {
       id="poster-light"
       style={{
         display: "flex",
-        flexDirection:"column",
+        flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
         height: `${height === 0 ? "min(70vh, 490px)" : "min(35vh, 245px)"}`,
@@ -51,6 +51,7 @@ const Header = ({ searchVal = "", setSearch, height = 0}) => {
               <BiCameraMovie style={{ color: "rgba(255,255,255,0.8)" }} />
             </InputAdornment>
           }
+          placeholder="Search movies & tv shows"
           sx={{
             color: "primary.contrastText",
             fontSize: "inherit",
@@ -77,7 +78,6 @@ const Header = ({ searchVal = "", setSearch, height = 0}) => {
             />
           </IconButton>
         </Box>
-      
       </Box>
     </div>
   );
