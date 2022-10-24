@@ -19,7 +19,7 @@ const MovieCardSkeleton = ({ marg }) => {
           maxWidth: "16rem",
           width: "16rem",
           height: "21rem",
-          backgroundColor: "secondary.dark",
+          backgroundColor: "primary.dark",
         }}
       >
         <CardMedia
@@ -28,7 +28,7 @@ const MovieCardSkeleton = ({ marg }) => {
             height: "16rem",
           }}
         >
-          <Skeleton variant="rounded" animation="wave" sx={{ bgcolor: "secondary.main",height:"100%" }} />
+          <Skeleton variant="rounded" animation="wave" sx={{ bgcolor: "secondary.dark",height:"100%" }} />
         </CardMedia>
 
         <CardContent>
@@ -38,7 +38,7 @@ const MovieCardSkeleton = ({ marg }) => {
               fontWeight: 700,
             }}
           >
-            <Skeleton sx={{ bgcolor: "secondary.main" }} />
+            <Skeleton sx={{ bgcolor: "secondary.dark" }} />
           </Typography>
           <Box sx={{ display: "flex", alignItems: "flex-start", opacity: 0.8 }}>
             <Typography
@@ -46,7 +46,7 @@ const MovieCardSkeleton = ({ marg }) => {
               component="span"
               sx={{ flexGrow: 0.45, mr: 1 }}
             >
-              <Skeleton sx={{ bgcolor: "secondary.main" }} />
+              <Skeleton sx={{ bgcolor: "secondary.dark" }} />
             </Typography>
 
             <Typography
@@ -54,7 +54,7 @@ const MovieCardSkeleton = ({ marg }) => {
               component="span"
               sx={{ flexGrow: 0.45 }}
             >
-              <Skeleton sx={{ bgcolor: "secondary.main" }} />
+              <Skeleton sx={{ bgcolor: "secondary.dark" }} />
             </Typography>
           </Box>
         </CardContent>

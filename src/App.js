@@ -1,8 +1,10 @@
 import {  useState } from "react";
 import Header from "./components/Header";
 import SearchResult from "./components/SearchResult";
-import TrendingNow from "./components/TrendingNow";
 import axios from "axios";
+import NowPlaying from "./components/NowPlaying";
+import Popular from "./components/Popular";
+import TopRated from "./components/TopRated";
 
 const TMDB_API_TOKEN =
   "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2M2VlZWNhMzNlMjlkZDFjNTQwNzU0ZjQ2MDI0MjBkYiIsInN1YiI6IjYzNTNiMzgyNTZiOWY3MDA3ZTJlZDc4YiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.1-28aCsl_Dpfh7RyYzJLehXZxWbIvWfUYQnCJwqACmE";
@@ -19,25 +21,22 @@ function App() {
   return (
     <div className="App">
       <Header
-        setSearch={(query, changed = false) =>
+        setSearch={(query) =>
           setShowSearch((prev) => ({
             ...prev,
             show: true,
             query: query,
-            change: changed
-              ? showSearch.change === 1
-                ? 0
-                : 1
-              : showSearch.change,
           }))
         }
         height={showSearch.show ? 1 : 0}
       />
       {showSearch.show ? (
-        <SearchResult search={showSearch.query} change={showSearch.change} />
+        <SearchResult search={showSearch.query} />
       ) : (
         <>
-          <TrendingNow />
+          <Popular />
+          <NowPlaying />
+          <TopRated />
         </>
       )}
     </div>

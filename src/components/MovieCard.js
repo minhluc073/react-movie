@@ -35,7 +35,7 @@ const MovieCard = ({ movie,marg }) => {
               maxWidth: "16rem",
               width: "16rem",
               height: "21rem",
-              backgroundColor: "secondary.dark",
+              backgroundColor: "primary.dark",
             }}
           >
             <CardMedia
@@ -60,7 +60,7 @@ const MovieCard = ({ movie,marg }) => {
                   whiteSpace: "nowrap",
                   overflow: "hidden",
                   textOverflow: "clip",
-                  color: "secondary.contrastText",
+                  color: "primary.contrastText",
                 }}
               >
                 {movieInfo.title && movieInfo.title}
@@ -71,7 +71,7 @@ const MovieCard = ({ movie,marg }) => {
                 <Typography
                   variant="body2"
                   component="span"
-                  sx={{ color: "secondary.light" }}
+                  sx={{ color: "primary.light" }}
                 >
                   {movieInfo.date ? movieInfo.date : "Unknown Date"}
                 </Typography>
@@ -85,7 +85,7 @@ const MovieCard = ({ movie,marg }) => {
                 <Typography
                   variant="body2"
                   component="span"
-                  sx={{ color: "secondary.light" }}
+                  sx={{ color: "primary.light",opacity:0.8 }}
                 >
                   ({movieInfo.vote_count ? movieInfo.vote_count: "0"})
                 </Typography>

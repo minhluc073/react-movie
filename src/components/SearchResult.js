@@ -4,14 +4,16 @@ import axios from "axios";
 import MovieCard from "./MovieCard";
 import config from "../configs/searchConfig";
 import MovieCardSkeleton from "./MovieCardSkeleton";
+import SearchFilter from "./SearchFilter";
 
-const SearchResult = ({ search = "",change }) => {
+const SearchResult = ({ search = "" }) => {
   const [showResult, setShowResult] = useState({
     show: false,
-    query: "",
+    query: search,
     result: [],
     page: 1,
     pages_total: 1,
+    change:0
   });
   const [loading, setLoading] = useState(false);
 
@@ -20,8 +22,7 @@ const SearchResult = ({ search = "",change }) => {
   };
 
   useEffect(() => {
-    setLoading(true);
-    if (search !== "") {
+      setLoading(true);
       axios
         .get(
           `https://api.themoviedb.org/3/search/${config.type}?language=en-US&query=${search}&page=${showResult.page}&include_adult=${config.includeAdult}`
@@ -38,10 +39,7 @@ const SearchResult = ({ search = "",change }) => {
           await sleep(500)
           setLoading(false);
         });
-    }
-  }, [search,showResult.page,change]);
-
-
+  }, [search,showResult.page,showResult.change]);
 
   const handlePageChange = (e, value) => {
     setShowResult((prev) => ({ ...prev, page: value }));
@@ -64,9 +62,18 @@ const SearchResult = ({ search = "",change }) => {
     }
   };
 
+
   return (
     <>
       <Container maxWidth="lg">
+          <SearchFilter
+            change={() => {
+                 setShowResult((prev) => ({
+                   ...prev,
+                   change: showResult.change === 0 ? 1 : 0,
+                 }));
+            }}
+          />
         <Typography variant="h4" sx={{ mt: 3, mx: 1 }}>
           Search results for "{showResult.query}"
         </Typography>
@@ -82,7 +89,7 @@ const SearchResult = ({ search = "",change }) => {
             value={showResult.page}
             onChange={handlePageChange}
             count={showResult.pages_total}
-            color="secondary"
+            color="primary"
             shape="rounded"
           />
         </Box>

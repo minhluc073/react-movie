@@ -5,7 +5,7 @@ import Movie from "./MovieCard";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import MovieCardSkeleton from "./MovieCardSkeleton";
 
-const TrendingNow = () => {
+const TopRated = () => {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -16,7 +16,7 @@ const TrendingNow = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get("https://api.themoviedb.org/3/trending/all/week")
+      .get("https://api.themoviedb.org/3/movie/top_rated")
       .then(async (res) => {
         setMovies(res.data.results);
         await sleep(500);
@@ -25,21 +25,24 @@ const TrendingNow = () => {
   }, []);
 
   const handleScrollLeft = () => {
-    document.getElementById("trending-cont").scrollLeft += Math.min(
+    document.getElementById("toprated-cont").scrollLeft += Math.min(
       document.body.clientWidth * 0.9,
       500
     );
   };
 
   const handleScrollRight = () => {
-    document.getElementById("trending-cont").scrollLeft -= Math.min(
+    document.getElementById("toprated-cont").scrollLeft -= Math.min(
       document.body.clientWidth * 0.9,
       500
     );
   };
 
   const toLoad = () => {
-    if (loading) return [...Array(20)].map((item,index) => <MovieCardSkeleton key={`trendingPreLoadSkelton_${index}`} marg={2} />);
+    if (loading)
+      return [...Array(20)].map((item, index) => (
+        <MovieCardSkeleton key={`topratedPreLoadSkelton_${index}`} marg={2} />
+      ));
     else
       return movies.map((movie) => (
         <Movie key={movie.id} marg={2} movie={movie} />
@@ -47,9 +50,9 @@ const TrendingNow = () => {
   };
 
   return (
-    <Container maxWidth="lg" sx={{ p: 0 }}>
+    <Container maxWidth="lg" sx={{ p: 0, mt: 5 }}>
       <Typography variant="h4" sx={{ m: 2 }} className="oswald-500">
-        Trending Now
+        Top Rated Movies
       </Typography>
       <Container
         sx={{
@@ -69,7 +72,8 @@ const TrendingNow = () => {
             my: 2,
             px: 3,
           }}
-          id="trending-cont"
+          id="toprated-cont"
+          className="noscrollbar"
         >
           <Box
             className="overlay-button"
@@ -121,4 +125,4 @@ const TrendingNow = () => {
   );
 };
 
-export default TrendingNow;
+export default TopRated;

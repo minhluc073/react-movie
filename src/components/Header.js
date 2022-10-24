@@ -1,7 +1,6 @@
 import { Box, IconButton, Input, InputAdornment } from "@mui/material";
 import React, { useState } from "react";
 import { BiCameraMovie, BiSearchAlt } from "react-icons/bi";
-import SearchFilter from "./SearchFilter";
 
 const Header = ({ searchVal = "", setSearch, height = 0}) => {
   const [searchValue, setSearchValue] = useState(searchVal);
@@ -13,25 +12,25 @@ const Header = ({ searchVal = "", setSearch, height = 0}) => {
   const handleSearchSubmit = (e) => {
     if(e)
     e.preventDefault();
-    setSearch(searchValue);
+    if(searchValue!==""){setSearch(searchValue);}
   };
 
   return (
     <div
-      id="poster"
+      id="poster-light"
       style={{
         display: "flex",
         flexDirection:"column",
         alignItems: "center",
         justifyContent: "center",
-        height: `${height === 0 ? "min(80vh, 560px)" : "min(40vh, 280px)"}`,
+        height: `${height === 0 ? "min(70vh, 490px)" : "min(35vh, 245px)"}`,
       }}
     >
       <Box
         id="form"
         component="form"
         sx={{
-          backgroundColor: "secondary.main",
+          backgroundColor: "primary.main",
           boxShadow:
             "rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px",
           border: 3,
@@ -53,7 +52,7 @@ const Header = ({ searchVal = "", setSearch, height = 0}) => {
             </InputAdornment>
           }
           sx={{
-            color: "secondary.contrastText",
+            color: "primary.contrastText",
             fontSize: "inherit",
             ml: 2,
             my: 1,
@@ -80,7 +79,6 @@ const Header = ({ searchVal = "", setSearch, height = 0}) => {
         </Box>
       
       </Box>
-      <SearchFilter change={()=>{setSearch(searchValue,true)}}/>
     </div>
   );
 };

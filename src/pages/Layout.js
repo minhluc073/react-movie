@@ -7,14 +7,14 @@ import TopBar from "../components/TopBar";
 const theme = createTheme({
   palette: {
     primary: {
-      light: "#A5C9CA",
-      main: "#395B64",
-      dark: "#2C3333",
-      contrastText: "#E7F6F2",
+      light: "#a5c9ca",
+      main: "#256D85",
+      dark: "#06283D",
+      contrastText: "#DFF6FF",
     },
     secondary: {
-      light: "#6998AB",
-      main: "#406882",
+      light: "#EDEDED",
+      main: "#D8D9CF",
       dark: "#1A374D",
       contrastText: "rgba(255,255,255,0.9)",
     },

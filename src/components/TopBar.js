@@ -32,7 +32,6 @@ const TopBar = () => {
           <Typography
             variant="h5"
             noWrap
-            component="a"
             href="#"
             sx={{
               mr: 2,
@@ -126,7 +125,6 @@ const TopBar = () => {
           <Typography
             variant="h5"
             noWrap
-            component="a"
             href=""
             sx={{
               mr: 2,
