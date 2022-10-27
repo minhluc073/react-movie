@@ -1,6 +1,6 @@
-import { Box, IconButton, Input, InputAdornment } from "@mui/material";
+import { Box, IconButton, Input} from "@mui/material";
 import React, { useState } from "react";
-import { BiCameraMovie, BiSearchAlt } from "react-icons/bi";
+import { BiSearchAlt } from "react-icons/bi";
 
 const Header = ({ searchVal = "", setSearch, height = 0}) => {
   const [searchValue, setSearchValue] = useState(searchVal);

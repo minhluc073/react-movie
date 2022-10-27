@@ -1,11 +1,9 @@
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import Header from "./components/Header";
 import SearchResult from "./components/SearchResult";
 import axios from "axios";
 import Popular from "./components/Popular";
-import Latest from "./components/NowPlaying";
 import TopRated from "./components/TopRated";
-import { useParams } from "react-router-dom";
 import NowPlaying from "./components/NowPlaying";
 
 const TMDB_API_TOKEN =
