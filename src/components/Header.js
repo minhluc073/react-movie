@@ -45,7 +45,6 @@ const Header = ({ searchVal = "", setSearch, height = 0}) => {
         <Input
           value={searchValue}
           onChange={handleSearchChange}
-          autoFocus={true}
           placeholder="Search movies & tv shows"
           sx={{
             color: "primary.contrastText",
