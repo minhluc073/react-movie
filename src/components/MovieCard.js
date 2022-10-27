@@ -7,21 +7,35 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import cinemaPoster from "../images/cinema_poster.jpg";
 
-const MovieCard = ({ movie,marg }) => {
+const MovieCard = ({ movie, marg }) => {
   const [movieInfo, setMovieInfo] = useState(null);
-  
+  const navigate = useNavigate();
+
   useEffect(() => {
     setMovieInfo((prev) => ({
       ...prev,
+      id: movie.id,
       title: movie.title ? movie.title : movie.name,
       poster: movie.poster_path,
-      date: (new Date(movie.release_date ? movie.release_date : movie.first_air_date)).getFullYear(),
+      date: new Date(
+        movie.release_date ? movie.release_date : movie.first_air_date
+      ).getFullYear(),
       vote: movie.vote_average ? movie.vote_average / 2 : 0,
       vote_count: movie.vote_count ? movie.vote_count : 0,
+      type: movie.release_date ? "movie" : "tv",
     }));
   }, [movie]);
+
+  const handleCardCick = () => {
+    navigate(
+      movieInfo.type === "movie"
+        ? `/movie/${movieInfo.id}`
+        : `/tvshow/${movieInfo.id}`
+    );
+  };
 
   return (
     <>
@@ -31,12 +45,14 @@ const MovieCard = ({ movie,marg }) => {
             variant="outlined"
             sx={{
               boxShadow: 3,
+              textDecoration: "none",
               mx: marg,
               maxWidth: "16rem",
               width: "min(43vw,16rem)",
               height: "min(63vw,21rem)",
               backgroundColor: "primary.dark",
             }}
+            onClick={handleCardCick}
           >
             <CardMedia
               component="img"
@@ -52,7 +68,7 @@ const MovieCard = ({ movie,marg }) => {
                   : cinemaPoster
               }`}
             />
-            <CardContent sx={{ p: {xs:1,sm:2} }}>
+            <CardContent sx={{ p: { xs: 1, sm: 2 } }}>
               <Typography
                 variant="body1"
                 sx={{
@@ -69,7 +85,7 @@ const MovieCard = ({ movie,marg }) => {
               <Box
                 sx={{
                   display: "flex",
-                  flexDirection: { xs: "column",sm:"row" },
+                  flexDirection: { xs: "column", sm: "row" },
                   alignItems: "flex-start",
                   opacity: 0.8,
                 }}
@@ -77,11 +93,15 @@ const MovieCard = ({ movie,marg }) => {
                 <Typography
                   variant="body2"
                   component="span"
-                  sx={{ color: "primary.light",mr:1, fontSize: "min(0.875rem,3vw)" }}
+                  sx={{
+                    color: "primary.light",
+                    mr: 1,
+                    fontSize: "min(0.875rem,3vw)",
+                  }}
                 >
                   {movieInfo.date ? movieInfo.date : "Unknown Date"}
                 </Typography>
-                <Box sx={{display:"flex"}}>
+                <Box sx={{ display: "flex" }}>
                   <Rating
                     name="rating"
                     value={movieInfo.vote}

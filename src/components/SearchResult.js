@@ -48,7 +48,14 @@ const SearchResult = ({ search = "" }) => {
   const toLoad = () => {
     if (loading)
       return [...Array(20)].map((item, index) => (
-        <Grid key={`moviePreloadSkelton_${index}`} item sm={6} md={4} lg={3}>
+        <Grid
+          key={`moviePreloadSkelton_${index}`}
+          item
+          xs={6}
+          md={4}
+          lg={3}
+          sx={{ p: "0 !important", my: "1rem" }}
+        >
           <MovieCardSkeleton marg="auto" />
         </Grid>
       ));

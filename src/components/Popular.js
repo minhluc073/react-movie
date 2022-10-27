@@ -28,6 +28,7 @@ const Popular = () => {
       });
   }, [type]);
 
+
   const handleScrollLeft = () => {
     document.getElementById("popular-cont").scrollLeft += Math.min(
       document.body.clientWidth * 0.6,

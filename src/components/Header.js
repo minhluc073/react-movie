@@ -46,11 +46,6 @@ const Header = ({ searchVal = "", setSearch, height = 0}) => {
           value={searchValue}
           onChange={handleSearchChange}
           autoFocus={true}
-          startAdornment={
-            <InputAdornment position="start">
-              <BiCameraMovie style={{ color: "rgba(255,255,255,0.8)" }} />
-            </InputAdornment>
-          }
           placeholder="Search movies & tv shows"
           sx={{
             color: "primary.contrastText",

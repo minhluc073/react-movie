@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import App from "./App";
+import App from './App'
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
@@ -11,6 +11,7 @@ import { BrowserRouter, Route,  Routes } from "react-router-dom";
 import Layout from "./pages/Layout";
 import About from "./pages/About";
 import MoviePage from "./pages/MoviePage";
+import TVPage from "./pages/TVPage";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -20,6 +21,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <Route index element={<App />} />
           <Route path="about" element={<About />} />
           <Route path="movie/:movieId" element={<MoviePage />} />
+          <Route path="tvshow/:tvId" element={<TVPage />} />
           <Route path="*" element={<ErrorPage />} />
         </Route>
       </Routes>

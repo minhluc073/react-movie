@@ -38,51 +38,45 @@ const CircularProgressWithLabel = (props) => {
   );
 };
 
-const MoviePage = () => {
+const TVPage = () => {
   const params = useParams();
   const [movie, setMovie] = useState({});
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    function convertMin(totalMinutes) {
-      const hours = Math.floor(totalMinutes / 60);
-      const minutes = totalMinutes % 60;
-      return `${hours}hr ${minutes}min`;
-    }
-    axios
-      .get(`https://api.themoviedb.org/3/movie/${params.movieId}`)
-      .then((res) => {
-        const mvData = res.data;
-        console.log(mvData);
-        setMovie((prev) => ({
-          ...prev,
-          title: mvData.title,
-          poster: mvData.poster_path,
-          year: new Date(mvData.release_date).getFullYear(),
-          date: mvData.release_date,
-          vote: mvData.vote_average ? mvData.vote_average * 10 : 0,
-          vote_count: mvData.vote_count ? mvData.vote_count : 0,
-          tagline: mvData.tagline,
-          genres: mvData.genres,
-          overview: mvData.overview,
-          duration: convertMin(mvData.runtime),
-          countries: mvData.production_countries,
-        }));
-        axios
-          .get(`https://api.themoviedb.org/3/movie/${params.movieId}/credits`)
-          .then((creditsRes) => {
-            console.log(creditsRes.data);
-            const crew = creditsRes.data.crew;
-            setMovie((prev) => ({
-              ...prev,
-              crew: crew
-                ?.sort((a, b) => (a.popularity > b.popularity ? -1 : 1))
-                .slice(0, 6),
-            }));
-            setLoading(false);
-          });
-      });
-  }, [params.movieId]);
+    axios.get(`https://api.themoviedb.org/3/tv/${params.tvId}`).then((res) => {
+      const mvData = res.data;
+      console.log(mvData);
+      setMovie((prev) => ({
+        ...prev,
+        title: mvData.name,
+        poster: mvData.poster_path,
+        year: new Date(mvData.first_air_date).getFullYear(),
+        date: mvData.first_air_date,
+        vote: mvData.vote_average ? mvData.vote_average * 10 : 0,
+        vote_count: mvData.vote_count ? mvData.vote_count : 0,
+        tagline: mvData.tagline,
+        genres: mvData.genres,
+        overview: mvData.overview,
+        eps: mvData.number_of_episodes ? mvData.number_of_episodes : 0,
+        seasons: mvData.number_of_seasons ? mvData.number_of_seasons : 0,
+        countries: mvData.production_countries,
+      }));
+      axios
+        .get(`https://api.themoviedb.org/3/tv/${params.tvId}/credits`)
+        .then((creditsRes) => {
+          console.log(creditsRes.data);
+          const crew = creditsRes.data.crew;
+          setMovie((prev) => ({
+            ...prev,
+            crew: crew
+              ?.sort((a, b) => (a.popularity > b.popularity ? -1 : 1))
+              .slice(0, 6),
+          }));
+          setLoading(false);
+        });
+    });
+  }, [params.tvId]);
 
   return (
     <Container maxWidth="lg" sx={{ px: 0, py: 2 }}>
@@ -170,18 +164,29 @@ const MoviePage = () => {
                         maxWidth: "10rem",
                       }}
                     >
-                      {movie.duration && movie.duration} -{" "}
-                      {movie.date && movie.date}
+                      {movie.seasons && movie.seasons} Seasons
                     </Typography>
                     <Typography
                       variant="body2"
                       sx={{
                         px: 1,
-                        py: 1,
+                        pt: 1,
                         color: "primary.light",
                         maxWidth: "10rem",
                       }}
                     >
+                      {movie.eps && movie.eps} Episodes
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        px: 1,
+                        pt: 1,
+                        color: "primary.light",
+                        maxWidth: "10rem",
+                      }}
+                    >
+                      {movie.date && movie.date} -{" "}
                       {movie.countries &&
                         movie.countries.length > 0 &&
                         movie.countries.map(
@@ -312,4 +317,4 @@ const MoviePage = () => {
   );
 };
 
-export default MoviePage;
+export default TVPage;
