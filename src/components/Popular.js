@@ -59,7 +59,7 @@ const Popular = () => {
   };
 
   return (
-    <Container maxWidth="lg" sx={{ p: 0, mt: 5 }}>
+    <Container maxWidth="lg" sx={{ p: 0, mt: 2 }}>
       <Box sx={{ display: "flex" }}>
         <Typography
         variant="body1"

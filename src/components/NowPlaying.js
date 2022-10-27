@@ -64,7 +64,7 @@ const NowPlaying = () => {
   };
 
   return (
-    <Container maxWidth="lg" sx={{ p: 0, mt: 5 }}>
+    <Container maxWidth="lg" sx={{ p: 0, mt: 3 }}>
       <Box sx={{ display: "flex" }}>
         <Typography
           variant="body1"
