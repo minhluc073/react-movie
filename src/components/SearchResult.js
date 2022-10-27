@@ -3,7 +3,7 @@ import { Box, Container, Grid, Pagination, Typography } from "@mui/material";
 import axios from "axios";
 import MovieCard from "../components/MovieCard";
 import config from "../configs/searchConfig";
-import MovieCardSkeleton from "../components/MovieCardSkeleton";
+import MovieCardSkeleton from "../ComponentSkeltons/MovieCardSkeleton";
 import SearchFilter from "../components/SearchFilter";
 
 const SearchResult = ({ search = "" }) => {

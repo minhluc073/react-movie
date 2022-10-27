@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Movie from "./MovieCard";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
-import MovieCardSkeleton from "./MovieCardSkeleton";
+import MovieCardSkeleton from "../ComponentSkeltons/MovieCardSkeleton";
 import { RiTvFill, RiTvLine } from "react-icons/ri";
 import {MdLocalMovies, MdOutlineLocalMovies} from 'react-icons/md'
 

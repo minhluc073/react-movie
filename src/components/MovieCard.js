@@ -17,7 +17,7 @@ const MovieCard = ({ movie,marg }) => {
       ...prev,
       title: movie.title ? movie.title : movie.name,
       poster: movie.poster_path,
-      date: movie.release_date ? movie.release_date : movie.first_air_date,
+      date: (new Date(movie.release_date ? movie.release_date : movie.first_air_date)).getFullYear(),
       vote: movie.vote_average ? movie.vote_average / 2 : 0,
       vote_count: movie.vote_count ? movie.vote_count : 0,
     }));

@@ -10,6 +10,7 @@ import ErrorPage from "./pages/ErrorPage";
 import { BrowserRouter, Route,  Routes } from "react-router-dom";
 import Layout from "./pages/Layout";
 import About from "./pages/About";
+import MoviePage from "./pages/MoviePage";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -18,6 +19,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <Route path="/" element={<Layout />}>
           <Route index element={<App />} />
           <Route path="about" element={<About />} />
+          <Route path="movie/:movieId" element={<MoviePage />} />
           <Route path="*" element={<ErrorPage />} />
         </Route>
       </Routes>
