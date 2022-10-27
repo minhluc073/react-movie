@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Box, Container, Grid, Pagination, Typography } from "@mui/material";
 import axios from "axios";
-import MovieCard from "./MovieCard";
+import MovieCard from "../components/MovieCard";
 import config from "../configs/searchConfig";
-import MovieCardSkeleton from "./MovieCardSkeleton";
-import SearchFilter from "./SearchFilter";
+import MovieCardSkeleton from "../components/MovieCardSkeleton";
+import SearchFilter from "../components/SearchFilter";
 
 const SearchResult = ({ search = "" }) => {
   const [showResult, setShowResult] = useState({
@@ -55,7 +55,7 @@ const SearchResult = ({ search = "" }) => {
     else {
       if (showResult.result.length !== 0)
         return showResult.result.map((movie) => (
-          <Grid key={movie.id} item sm={6} md={4} lg={3}>
+          <Grid key={movie.id} item xs={6} md={4} lg={3} sx={{p:"0 !important",my:"1rem"}}>
             <MovieCard marg="auto" movie={movie} />
           </Grid>
         ));
@@ -65,7 +65,7 @@ const SearchResult = ({ search = "" }) => {
 
   return (
     <>
-      <Container maxWidth="lg">
+      <Container maxWidth="lg" sx={{p:0}}>
           <SearchFilter
             change={() => {
                  setShowResult((prev) => ({
@@ -74,12 +74,12 @@ const SearchResult = ({ search = "" }) => {
                  }));
             }}
           />
-        <Typography variant="h4" sx={{ mt: 3, mx: 1 }}>
+        <Typography variant="h4" sx={{ mt: 3, mx: 1,fontSize:"min(7vw,2.125rem)" }}>
           Search results for "{showResult.query}"
         </Typography>
         <Grid
           container
-          spacing={2}
+          spacing={0}
           sx={{ my: 2, mx: "auto", justifyContent: "center" }}
         >
           {toLoad()}

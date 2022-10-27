@@ -1,13 +1,17 @@
-import { Box, Container, IconButton, Typography } from "@mui/material";
+import { Box, Container, IconButton, Stack, Switch, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Movie from "./MovieCard";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import MovieCardSkeleton from "./MovieCardSkeleton";
+import { RiTvFill, RiTvLine } from "react-icons/ri";
+import {MdLocalMovies, MdOutlineLocalMovies} from 'react-icons/md'
+
 
 const Popular = () => {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [type,setType] = useState("movie");
 
   const sleep = (milliseconds) => {
     return new Promise((resolve) => setTimeout(resolve, milliseconds));
@@ -16,27 +20,31 @@ const Popular = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get("https://api.themoviedb.org/3/movie/popular")
+      .get(`https://api.themoviedb.org/3/${type}/popular`)
       .then(async (res) => {
         setMovies(res.data.results);
         await sleep(500);
         setLoading(false);
       });
-  }, []);
+  }, [type]);
 
   const handleScrollLeft = () => {
     document.getElementById("popular-cont").scrollLeft += Math.min(
-      document.body.clientWidth * 0.9,
+      document.body.clientWidth * 0.6,
       500
     );
   };
 
   const handleScrollRight = () => {
     document.getElementById("popular-cont").scrollLeft -= Math.min(
-      document.body.clientWidth * 0.9,
+      document.body.clientWidth * 0.6,
       500
     );
   };
+
+  const handleTypeChange = (e)=>{
+    setType(e.target.checked?"tv":"movie")
+  }
 
   const toLoad = () => {
     if (loading)
@@ -51,9 +59,25 @@ const Popular = () => {
 
   return (
     <Container maxWidth="lg" sx={{ p: 0, mt: 5 }}>
-      <Typography variant="h4" sx={{ m: 2 }} className="oswald-500">
-        Popular Movies
-      </Typography>
+      <Box sx={{ display: "flex" }}>
+        <Typography
+        variant="body1"
+          sx={{
+            fontSize: { xs: "1.1rem", sm: "1.8rem", md: "2.125rem" },
+            m: 2,
+            flexGrow: 1,
+          }}
+          className="oswald-500"
+        >
+          Popular<small>({type === "movie" ? "Movies" : "TV Shows"})</small>
+        </Typography>
+        <Stack direction="row" sx={{ alignItems: "center",mr:1 }}>
+          {type==="movie"?<MdLocalMovies />:<MdOutlineLocalMovies />}
+          <Switch value={type==="tv"} onChange={handleTypeChange} inputProps={{ "aria-label": "movie or tv show" }} />
+          {type === "tv" ? <RiTvFill /> : <RiTvLine />}
+        </Stack>
+      </Box>
+
       <Container
         sx={{
           width: "100%",
@@ -70,7 +94,7 @@ const Popular = () => {
             scrollBehavior: "smooth",
             scrollSnapType: "x mandatory",
             my: 2,
-            px: 3,
+            px: 0,
           }}
           id="popular-cont"
           className="noscrollbar"

@@ -36,6 +36,7 @@ const SearchFilter = ({ change }) => {
         color: "secondary.light",
         borderRadius: "5px",
         mt: 2,
+        width:"90vw",
         mx:"auto",
         p: 1,
         boxShadow: 2,

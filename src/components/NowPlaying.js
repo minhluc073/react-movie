@@ -1,13 +1,23 @@
-import { Box, Container, IconButton, Typography } from "@mui/material";
+import {
+  Box,
+  Container,
+  IconButton,
+  Stack,
+  Switch,
+  Typography,
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Movie from "./MovieCard";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import MovieCardSkeleton from "./MovieCardSkeleton";
+import { RiTvFill, RiTvLine } from "react-icons/ri";
+import { MdLocalMovies, MdOutlineLocalMovies } from "react-icons/md";
 
 const NowPlaying = () => {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [type, setType] = useState("movie");
 
   const sleep = (milliseconds) => {
     return new Promise((resolve) => setTimeout(resolve, milliseconds));
@@ -16,34 +26,38 @@ const NowPlaying = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get("https://api.themoviedb.org/3/movie/now_playing")
+      .get(`https://api.themoviedb.org/3/${type}/${type==="movie"?"now_playing":"on_the_air"}`)
       .then(async (res) => {
         setMovies(res.data.results);
         await sleep(500);
         setLoading(false);
       });
-  }, []);
+  }, [type]);
 
   const handleScrollLeft = () => {
     document.getElementById("nowplaying-cont").scrollLeft += Math.min(
-      document.body.clientWidth * 0.9,
+      document.body.clientWidth * 0.6,
       500
     );
   };
 
   const handleScrollRight = () => {
     document.getElementById("nowplaying-cont").scrollLeft -= Math.min(
-      document.body.clientWidth * 0.9,
+      document.body.clientWidth * 0.6,
       500
     );
+  };
+
+  const handleTypeChange = (e) => {
+    setType(e.target.checked ? "tv" : "movie");
   };
 
   const toLoad = () => {
     if (loading)
       return [...Array(20)].map((item, index) => (
-        <MovieCardSkeleton key={`nowPlayingPreLoadSkelton_${index}`} marg={2} />
+        <MovieCardSkeleton key={`NowPlayingPreLoadSkelton_${index}`} marg={2} />
       ));
-    else
+    else if (movies.length > 0)
       return movies.map((movie) => (
         <Movie key={movie.id} marg={2} movie={movie} />
       ));
@@ -51,9 +65,30 @@ const NowPlaying = () => {
 
   return (
     <Container maxWidth="lg" sx={{ p: 0, mt: 5 }}>
-      <Typography variant="h4" sx={{ m: 2 }} className="oswald-500">
-        Currently Playing
-      </Typography>
+      <Box sx={{ display: "flex" }}>
+        <Typography
+          variant="body1"
+          sx={{
+            fontSize: { xs: "1.1rem", sm: "1.8rem", md: "2.125rem" },
+            m: 2,
+            flexGrow: 1,
+          }}
+          className="oswald-500"
+        >
+          {type === "movie" ? "Now Playing" : "On Air"}
+          <small>({type === "movie" ? "Movies" : "TV Shows"})</small>
+        </Typography>
+        <Stack direction="row" sx={{ alignItems: "center", mr: 1 }}>
+          {type === "movie" ? <MdLocalMovies /> : <MdOutlineLocalMovies />}
+          <Switch
+            value={type === "tv"}
+            onChange={handleTypeChange}
+            inputProps={{ "aria-label": "movie or tv show" }}
+          />
+          {type === "tv" ? <RiTvFill /> : <RiTvLine />}
+        </Stack>
+      </Box>
+
       <Container
         sx={{
           width: "100%",
@@ -70,7 +105,7 @@ const NowPlaying = () => {
             scrollBehavior: "smooth",
             scrollSnapType: "x mandatory",
             my: 2,
-            px: 3,
+            px: 0,
           }}
           id="nowplaying-cont"
           className="noscrollbar"

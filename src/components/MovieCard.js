@@ -33,8 +33,8 @@ const MovieCard = ({ movie,marg }) => {
               boxShadow: 3,
               mx: marg,
               maxWidth: "16rem",
-              width: "16rem",
-              height: "21rem",
+              width: "min(43vw,16rem)",
+              height: "min(63vw,21rem)",
               backgroundColor: "primary.dark",
             }}
           >
@@ -44,7 +44,7 @@ const MovieCard = ({ movie,marg }) => {
                 width: "100%",
                 objectFit: "cover",
                 objectPosition: "0 95%",
-                height: "16rem",
+                height: "min(43vw,16rem)",
               }}
               image={`${
                 movieInfo.poster
@@ -52,11 +52,12 @@ const MovieCard = ({ movie,marg }) => {
                   : cinemaPoster
               }`}
             />
-            <CardContent>
+            <CardContent sx={{ p: {xs:1,sm:2} }}>
               <Typography
                 variant="body1"
                 sx={{
                   fontWeight: 700,
+                  fontSize: "min(1rem,4vw)",
                   whiteSpace: "nowrap",
                   overflow: "hidden",
                   textOverflow: "clip",
@@ -66,29 +67,39 @@ const MovieCard = ({ movie,marg }) => {
                 {movieInfo.title && movieInfo.title}
               </Typography>
               <Box
-                sx={{ display: "flex", alignItems: "flex-start", opacity: 0.8 }}
+                sx={{
+                  display: "flex",
+                  flexDirection: { xs: "column",sm:"row" },
+                  alignItems: "flex-start",
+                  opacity: 0.8,
+                }}
               >
                 <Typography
                   variant="body2"
                   component="span"
-                  sx={{ color: "primary.light" }}
+                  sx={{ color: "primary.light",mr:1, fontSize: "min(0.875rem,3vw)" }}
                 >
                   {movieInfo.date ? movieInfo.date : "Unknown Date"}
                 </Typography>
-                <Rating
-                  sx={{ ml: 1 }}
-                  name="read-only"
-                  value={movieInfo.vote}
-                  size="small"
-                  readOnly
-                />
-                <Typography
-                  variant="body2"
-                  component="span"
-                  sx={{ color: "primary.light",opacity:0.8 }}
-                >
-                  ({movieInfo.vote_count ? movieInfo.vote_count: "0"})
-                </Typography>
+                <Box sx={{display:"flex"}}>
+                  <Rating
+                    name="rating"
+                    value={movieInfo.vote}
+                    size="small"
+                    readOnly
+                  />
+                  <Typography
+                    variant="body2"
+                    component="span"
+                    sx={{
+                      color: "primary.light",
+                      fontSize: "min(1rem,3vw)",
+                      opacity: 0.8,
+                    }}
+                  >
+                    ({movieInfo.vote_count ? movieInfo.vote_count : "0"})
+                  </Typography>
+                </Box>
               </Box>
             </CardContent>
           </Card>

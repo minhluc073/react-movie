@@ -28,7 +28,7 @@ body {
 
 .monospace {
   font-family: "Roboto Mono", monospace !important;
-  letter-spacing: 0.2rem !important;
+  letter-spacing: 0.15rem !important;
 }
 
 .oswald-500 {
