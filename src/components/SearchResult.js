@@ -13,7 +13,7 @@ const SearchResult = ({ search = "" }) => {
     result: [],
     page: 1,
     pages_total: 1,
-    change:0
+    change: 0,
   });
   const [loading, setLoading] = useState(false);
 
@@ -22,24 +22,24 @@ const SearchResult = ({ search = "" }) => {
   };
 
   useEffect(() => {
-      setLoading(true);
-      axios
-        .get(
-          `https://api.themoviedb.org/3/search/${config.type}?language=en-US&query=${search}&page=${showResult.page}&include_adult=${config.includeAdult}`
-        )
-        .then(async (res) => {
-          setShowResult((prev) => ({
-            ...prev,
-            show: true,
-            query: search,
-            result: res.data.results,
-            page: res.data.page,
-            pages_total: res.data.total_pages,
-          }));
-          await sleep(500)
-          setLoading(false);
-        });
-  }, [search,showResult.page,showResult.change]);
+    setLoading(true);
+    axios
+      .get(
+        `https://api.themoviedb.org/3/search/${config.type}?language=en-US&query=${search}&page=${showResult.page}&include_adult=${config.includeAdult}`
+      )
+      .then(async (res) => {
+        setShowResult((prev) => ({
+          ...prev,
+          show: true,
+          query: search,
+          result: res.data.results,
+          page: res.data.page,
+          pages_total: res.data.total_pages,
+        }));
+        await sleep(500);
+        setLoading(false);
+      });
+  }, [search, showResult.page, showResult.change]);
 
   const handlePageChange = (e, value) => {
     setShowResult((prev) => ({ ...prev, page: value }));
@@ -62,26 +62,48 @@ const SearchResult = ({ search = "" }) => {
     else {
       if (showResult.result.length !== 0)
         return showResult.result.map((movie) => (
-          <Grid key={movie.id} item xs={6} md={4} lg={3} sx={{p:"0 !important",my:"1rem"}}>
+          <Grid
+            key={movie.id}
+            item
+            xs={6}
+            md={4}
+            lg={3}
+            sx={{ p: "0 !important", my: "1rem" }}
+          >
             <MovieCard marg="auto" movie={movie} />
           </Grid>
         ));
     }
   };
 
-
   return (
     <>
-      <Container maxWidth="lg" sx={{p:0}}>
-          <SearchFilter
-            change={() => {
-                 setShowResult((prev) => ({
-                   ...prev,
-                   change: showResult.change === 0 ? 1 : 0,
-                 }));
-            }}
-          />
-        <Typography variant="h4" sx={{ mt: 3, mx: 1,fontSize:"min(7vw,2.125rem)" }}>
+      <Container
+        maxWidth="lg"
+        sx={{
+          p: 0,
+          position: "relative",
+          top: "-2rem",
+          bgcolor: "primary.light",
+          pt: 1,
+          borderTopLeftRadius: "20px !important",
+          borderTopRightRadius: "20px !important",
+          height: "100%",
+          boxShadow: "0px -22px 15px -13px rgba(0,0,0,0.4)!important",
+        }}
+      >
+        <SearchFilter
+          change={() => {
+            setShowResult((prev) => ({
+              ...prev,
+              change: showResult.change === 0 ? 1 : 0,
+            }));
+          }}
+        />
+        <Typography
+          variant="h4"
+          sx={{ mt: 3, mx: 1, fontSize: "min(7vw,2.125rem)" }}
+        >
           Search results for "{showResult.query}"
         </Typography>
         <Grid

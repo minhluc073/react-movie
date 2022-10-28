@@ -62,19 +62,23 @@ const Popular = () => {
     <Container maxWidth="lg" sx={{ p: 0, mt: 2 }}>
       <Box sx={{ display: "flex" }}>
         <Typography
-        variant="body1"
+          variant="body1"
           sx={{
             fontSize: { xs: "1.1rem", sm: "1.8rem", md: "2.125rem" },
-            m: 2,
+            mx: 2,
             flexGrow: 1,
           }}
           className="oswald-500"
         >
           Popular<small>({type === "movie" ? "Movies" : "TV Shows"})</small>
         </Typography>
-        <Stack direction="row" sx={{ alignItems: "center",mr:1 }}>
-          {type==="movie"?<MdLocalMovies />:<MdOutlineLocalMovies />}
-          <Switch value={type==="tv"} onChange={handleTypeChange} inputProps={{ "aria-label": "movie or tv show" }} />
+        <Stack direction="row" sx={{ alignItems: "center", mr: 1 }}>
+          {type === "movie" ? <MdLocalMovies /> : <MdOutlineLocalMovies />}
+          <Switch
+            value={type === "tv"}
+            onChange={handleTypeChange}
+            inputProps={{ "aria-label": "movie or tv show" }}
+          />
           {type === "tv" ? <RiTvFill /> : <RiTvLine />}
         </Stack>
       </Box>
@@ -94,7 +98,7 @@ const Popular = () => {
             display: "flex",
             scrollBehavior: "smooth",
             scrollSnapType: "x mandatory",
-            my: 2,
+            my: 1,
             px: 0,
           }}
           id="popular-cont"

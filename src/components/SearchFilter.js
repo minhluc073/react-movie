@@ -34,11 +34,12 @@ const SearchFilter = ({ change }) => {
       sx={{
         backgroundColor: "primary.main",
         color: "secondary.light",
-        borderRadius: "5px",
+        borderRadius: "20px",
         mt: 2,
         width:"90vw",
         mx:"auto",
-        p: 1,
+        px: 2,
+        py:1,
         boxShadow: 2,
         maxWidth:"33rem"
       }}
@@ -83,12 +84,12 @@ const SearchFilter = ({ change }) => {
                 onChange={handleIncludeAdultChange}
                 color="secondary"
                 checked={includeAdult}
-                sx={{ p: "4px" }}
+                sx={{ p: "3px" }}
               />
             }
             label={
               <Typography component="span" sx={{ fontSize: "inherit" }}>
-                {`${includeAdult ? "Include" : "Don't"}`}
+                {`${includeAdult ? "Include" : "Don't Include"}`}
               </Typography>
             }
             sx={{ fontSize: "inherit" }}

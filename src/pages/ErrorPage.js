@@ -6,7 +6,7 @@ const ErrorPage = () => {
     <Typography
       variant="h4"
       className="oswald-500"
-      sx={{ textAlign: "center", my: 3 }}
+      sx={{ textAlign: "center", my: 3,mt:"5rem",mx:1 }}
     >
       {"Sorry, we got nothing to display here :)"}
     </Typography>

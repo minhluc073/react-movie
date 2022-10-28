@@ -1,8 +1,8 @@
-import { Box, IconButton, Input} from "@mui/material";
+import { Box, IconButton, Input } from "@mui/material";
 import React, { useState } from "react";
 import { BiSearchAlt } from "react-icons/bi";
 
-const Header = ({ searchVal = "", setSearch, height = 0}) => {
+const Header = ({ searchVal = "", setSearch }) => {
   const [searchValue, setSearchValue] = useState(searchVal);
 
   const handleSearchChange = (e) => {
@@ -10,9 +10,9 @@ const Header = ({ searchVal = "", setSearch, height = 0}) => {
   };
 
   const handleSearchSubmit = (e) => {
-    if(e)
-    e.preventDefault();
-    if(searchValue!==""){setSearch(searchValue);}
+    if (e) e.preventDefault();
+    if (searchValue !== "") setSearch(searchValue, true);
+    else setSearch("", false);
   };
 
   return (
@@ -23,7 +23,7 @@ const Header = ({ searchVal = "", setSearch, height = 0}) => {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        height: `${height === 0 ? "min(70vh, 490px)" : "min(35vh, 245px)"}`,
+        height: "min(35vh, 245px)",
       }}
     >
       <Box
@@ -39,6 +39,7 @@ const Header = ({ searchVal = "", setSearch, height = 0}) => {
           borderColor: "secondary.dark",
           fontSize: "1.5rem",
           display: "flex",
+          borderRadius: "35px !important",
         }}
         onSubmit={handleSearchSubmit}
       >
@@ -49,8 +50,10 @@ const Header = ({ searchVal = "", setSearch, height = 0}) => {
           sx={{
             color: "primary.contrastText",
             fontSize: "inherit",
-            ml: 2,
+            width: "min(65vw,35rem)",
             my: 1,
+            ml:"0.8rem",
+            mr:"0.1rem",
             "&::before": {
               border: "none !important",
             },
@@ -64,6 +67,8 @@ const Header = ({ searchVal = "", setSearch, height = 0}) => {
             display: "inline-flex",
             px: 2,
             backgroundColor: "secondary.dark",
+            borderTopRightRadius: "35px !important",
+            borderBottomRightRadius: "35px !important",
           }}
         >
           <IconButton type="submit">

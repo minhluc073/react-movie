@@ -70,7 +70,9 @@ const NowPlaying = () => {
           variant="body1"
           sx={{
             fontSize: { xs: "1.1rem", sm: "1.8rem", md: "2.125rem" },
-            m: 2,
+            mx:2,
+            mt:1,
+            mb:0,
             flexGrow: 1,
           }}
           className="oswald-500"
@@ -104,7 +106,7 @@ const NowPlaying = () => {
             display: "flex",
             scrollBehavior: "smooth",
             scrollSnapType: "x mandatory",
-            my: 2,
+            my: 1,
             px: 0,
           }}
           id="nowplaying-cont"

@@ -79,7 +79,7 @@ const TVPage = () => {
   }, [params.tvId]);
 
   return (
-    <Container maxWidth="lg" sx={{ px: 0, py: 2 }}>
+    <Container maxWidth="lg" sx={{ px: 0, py: 2, mt: "4rem" }}>
       {loading ? (
         <MoviePageSkeleton />
       ) : (
