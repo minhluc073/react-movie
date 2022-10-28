@@ -49,6 +49,8 @@ This can be obtained from [TMDB API Docs](https://developers.themoviedb.org/3)
 
 - [Movie database API provider](https://www.themoviedb.org/)
 
+- Logo Icon - [Movie icons created by Freepik - Flaticon](https://www.flaticon.com/free-icons/movie)
+
 ## Badges
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/628ca251-d51f-4b52-a6c1-4f7f4531dd64/deploy-status)](https://app.netlify.com/sites/movie-loft/deploys)
