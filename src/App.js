@@ -7,9 +7,7 @@ import TopRated from "./components/TopRated";
 import NowPlaying from "./components/NowPlaying";
 import { Container } from "@mui/material";
 
-const TMDB_API_TOKEN =
-  "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2M2VlZWNhMzNlMjlkZDFjNTQwNzU0ZjQ2MDI0MjBkYiIsInN1YiI6IjYzNTNiMzgyNTZiOWY3MDA3ZTJlZDc4YiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.1-28aCsl_Dpfh7RyYzJLehXZxWbIvWfUYQnCJwqACmE";
-axios.defaults.headers.common["Authorization"] = `Bearer ${TMDB_API_TOKEN}`;
+axios.defaults.headers.common["Authorization"] = `Bearer ${process.env.TMDB_API_TOKEN}`;
 axios.defaults.headers.get["Content-Type"] = "application/json";
 
 function HomePage() {

@@ -29,6 +29,7 @@ const TopBar = () => {
     <AppBar position="absolute" sx={{boxShadow:0,bgcolor:"transparent",opacity:0.9}}>
       <Container maxWidth="lg">
         <Toolbar disableGutters>
+          
           <Typography
             variant="h5"
             noWrap
