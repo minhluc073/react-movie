@@ -67,8 +67,8 @@ const Header = ({ searchVal = "", setSearch }) => {
             display: "inline-flex",
             px: 2,
             backgroundColor: "secondary.dark",
-            borderTopRightRadius: "35px !important",
-            borderBottomRightRadius: "35px !important",
+            borderTopRightRadius: "25px !important",
+            borderBottomRightRadius: "25px !important",
           }}
         >
           <IconButton type="submit">
