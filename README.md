@@ -41,7 +41,7 @@ Start the server
 
 To run this project, you will need to add the following environment variables to your .env file
 
-`TMDB_API_TOKEN`
+`REACT_APP_TMDB_API_TOKEN`
 
 This can be obtained from [TMDB API Docs](https://developers.themoviedb.org/3)
 
