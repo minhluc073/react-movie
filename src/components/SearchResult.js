@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, Container, Grid, Pagination, Typography } from "@mui/material";
+import { Alert, Box, Container, Fade, Grid, Pagination, Snackbar, Typography } from "@mui/material";
 import axios from "axios";
 import MovieCard from "../components/MovieCard";
 import config from "../configs/searchConfig";
@@ -16,6 +16,18 @@ const SearchResult = ({ search = "" }) => {
     change: 0,
   });
   const [loading, setLoading] = useState(false);
+  const [alert, setAlert] = useState({
+    open: false,
+    type: "info",
+    message: "Loading contents",
+  });
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setAlert((prev) => ({ ...prev, open: false }));
+  };
 
   const sleep = (milliseconds) => {
     return new Promise((resolve) => setTimeout(resolve, milliseconds));
@@ -38,8 +50,11 @@ const SearchResult = ({ search = "" }) => {
         }));
         await sleep(500);
         setLoading(false);
+      })
+      .catch(() => {
+        setAlert({ open: true, message: "Failed to load!", type: "error" });
       });
-  }, [search, showResult.page, showResult.change]);
+  }, [search, showResult.page, showResult.change,setAlert]);
 
   const handlePageChange = (e, value) => {
     setShowResult((prev) => ({ ...prev, page: value }));
@@ -123,6 +138,20 @@ const SearchResult = ({ search = "" }) => {
           />
         </Box>
       </Container>
+      <Snackbar
+        open={alert.open}
+        autoHideDuration={5000}
+        onClose={handleClose}
+        TransitionComponent={Fade}
+      >
+        <Alert
+          onClose={handleClose}
+          severity={alert.type}
+          sx={{ width: "100%" }}
+        >
+          {alert.message}
+        </Alert>
+      </Snackbar>
     </>
   );
 };

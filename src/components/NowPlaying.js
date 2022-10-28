@@ -1,7 +1,10 @@
 import {
+  Alert,
   Box,
   Container,
+  Fade,
   IconButton,
+  Snackbar,
   Stack,
   Switch,
   Typography,
@@ -18,7 +21,18 @@ const NowPlaying = () => {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [type, setType] = useState("movie");
+    const [alert, setAlert] = useState({
+      open: false,
+      type: "info",
+      message: "Loading contents",
+    });
 
+    const handleClose = (event, reason) => {
+      if (reason === "clickaway") {
+        return;
+      }
+      setAlert((prev) => ({ ...prev, open: false }));
+    };
   const sleep = (milliseconds) => {
     return new Promise((resolve) => setTimeout(resolve, milliseconds));
   };
@@ -26,13 +40,20 @@ const NowPlaying = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`https://api.themoviedb.org/3/${type}/${type==="movie"?"now_playing":"on_the_air"}`)
+      .get(
+        `https://api.themoviedb.org/3/${type}/${
+          type === "movie" ? "now_playing" : "on_the_air"
+        }`
+      )
       .then(async (res) => {
         setMovies(res.data.results);
-        await sleep(500);
+        await sleep(1000);
         setLoading(false);
+      })
+      .catch(() => {
+        setAlert({ open: true, message: "Failed to load!", type: "error" });
       });
-  }, [type]);
+  }, [type,setAlert]);
 
   const handleScrollLeft = () => {
     document.getElementById("nowplaying-cont").scrollLeft += Math.min(
@@ -70,9 +91,9 @@ const NowPlaying = () => {
           variant="body1"
           sx={{
             fontSize: { xs: "1.1rem", sm: "1.8rem", md: "2.125rem" },
-            mx:2,
-            mt:1,
-            mb:0,
+            mx: 2,
+            mt: 1,
+            mb: 0,
             flexGrow: 1,
           }}
           className="oswald-500"
@@ -158,6 +179,20 @@ const NowPlaying = () => {
           </Box>
         </Box>
       </Container>
+      <Snackbar
+        open={alert.open}
+        autoHideDuration={5000}
+        onClose={handleClose}
+        TransitionComponent={Fade}
+      >
+        <Alert
+          onClose={handleClose}
+          severity={alert.type}
+          sx={{ width: "100%" }}
+        >
+          {alert.message}
+        </Alert>
+      </Snackbar>
     </Container>
   );
 };

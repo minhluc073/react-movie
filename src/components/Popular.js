@@ -1,17 +1,38 @@
-import { Box, Container, IconButton, Stack, Switch, Typography } from "@mui/material";
+import {
+  Alert,
+  Box,
+  Container,
+  Fade,
+  IconButton,
+  Snackbar,
+  Stack,
+  Switch,
+  Typography,
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Movie from "./MovieCard";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import MovieCardSkeleton from "../ComponentSkeltons/MovieCardSkeleton";
 import { RiTvFill, RiTvLine } from "react-icons/ri";
-import {MdLocalMovies, MdOutlineLocalMovies} from 'react-icons/md'
-
+import { MdLocalMovies, MdOutlineLocalMovies } from "react-icons/md";
 
 const Popular = () => {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [type,setType] = useState("movie");
+  const [type, setType] = useState("movie");
+  const [alert, setAlert] = useState({
+    open: false,
+    type: "info",
+    message: "Loading contents",
+  });
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setAlert((prev) => ({ ...prev, open: false }));
+  };
 
   const sleep = (milliseconds) => {
     return new Promise((resolve) => setTimeout(resolve, milliseconds));
@@ -23,11 +44,13 @@ const Popular = () => {
       .get(`https://api.themoviedb.org/3/${type}/popular`)
       .then(async (res) => {
         setMovies(res.data.results);
-        await sleep(500);
+        await sleep(1000);
         setLoading(false);
+      })
+      .catch(() => {
+        setAlert({ open: true, message: "Failed to load!", type: "error" });
       });
-  }, [type]);
-
+  }, [type, setAlert]);
 
   const handleScrollLeft = () => {
     document.getElementById("popular-cont").scrollLeft += Math.min(
@@ -43,9 +66,9 @@ const Popular = () => {
     );
   };
 
-  const handleTypeChange = (e)=>{
-    setType(e.target.checked?"tv":"movie")
-  }
+  const handleTypeChange = (e) => {
+    setType(e.target.checked ? "tv" : "movie");
+  };
 
   const toLoad = () => {
     if (loading)
@@ -150,6 +173,20 @@ const Popular = () => {
           </Box>
         </Box>
       </Container>
+      <Snackbar
+        open={alert.open}
+        autoHideDuration={5000}
+        onClose={handleClose}
+        TransitionComponent={Fade}
+      >
+        <Alert
+          onClose={handleClose}
+          severity={alert.type}
+          sx={{ width: "100%" }}
+        >
+          {alert.message}
+        </Alert>
+      </Snackbar>
     </Container>
   );
 };

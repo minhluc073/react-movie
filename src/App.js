@@ -7,7 +7,9 @@ import TopRated from "./components/TopRated";
 import NowPlaying from "./components/NowPlaying";
 import { Container } from "@mui/material";
 
-axios.defaults.headers.common["Authorization"] = `Bearer ${process.env.REACT_APP_TMDB_API_TOKEN}`;
+axios.defaults.headers.common[
+  "Authorization"
+] = `Bearer ${process.env.REACT_APP_TMDB_API_TOKEN}`;
 axios.defaults.headers.get["Content-Type"] = "application/json";
 
 function HomePage() {

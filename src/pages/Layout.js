@@ -22,7 +22,7 @@ const theme = createTheme({
 });
 
 const Layout = () => {
-  
+
   return (
     <ThemeProvider theme={theme}>
         <CssBaseline />

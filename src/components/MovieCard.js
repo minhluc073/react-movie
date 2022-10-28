@@ -14,6 +14,7 @@ const MovieCard = ({ movie, marg }) => {
   const [movieInfo, setMovieInfo] = useState(null);
   const navigate = useNavigate();
 
+
   useEffect(() => {
     setMovieInfo((prev) => ({
       ...prev,

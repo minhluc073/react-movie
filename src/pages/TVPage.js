@@ -2,12 +2,15 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import {
+  Alert,
   Box,
   Chip,
   CircularProgress,
   Container,
   Divider,
+  Fade,
   Grid,
+  Snackbar,
   Stack,
   Typography,
 } from "@mui/material";
@@ -42,40 +45,60 @@ const TVPage = () => {
   const params = useParams();
   const [movie, setMovie] = useState({});
   const [loading, setLoading] = useState(true);
+    const [alert, setAlert] = useState({
+      open: false,
+      type: "info",
+      message: "Loading contents",
+    });
+
+    const handleClose = (event, reason) => {
+      if (reason === "clickaway") {
+        return;
+      }
+      setAlert((prev) => ({ ...prev, open: false }));
+    };
 
   useEffect(() => {
-    axios.get(`https://api.themoviedb.org/3/tv/${params.tvId}`).then((res) => {
-      const mvData = res.data;
-      console.log(mvData);
-      setMovie((prev) => ({
-        ...prev,
-        title: mvData.name,
-        poster: mvData.poster_path,
-        year: new Date(mvData.first_air_date).getFullYear(),
-        date: mvData.first_air_date,
-        vote: mvData.vote_average ? mvData.vote_average * 10 : 0,
-        vote_count: mvData.vote_count ? mvData.vote_count : 0,
-        tagline: mvData.tagline,
-        genres: mvData.genres,
-        overview: mvData.overview,
-        eps: mvData.number_of_episodes ? mvData.number_of_episodes : 0,
-        seasons: mvData.number_of_seasons ? mvData.number_of_seasons : 0,
-        countries: mvData.production_countries,
-      }));
-      axios
-        .get(`https://api.themoviedb.org/3/tv/${params.tvId}/credits`)
-        .then((creditsRes) => {
-          console.log(creditsRes.data);
-          const crew = creditsRes.data.crew;
-          setMovie((prev) => ({
-            ...prev,
-            crew: crew
-              ?.sort((a, b) => (a.popularity > b.popularity ? -1 : 1))
-              .slice(0, 6),
-          }));
-          setLoading(false);
-        });
-    });
+    axios
+      .get(`https://api.themoviedb.org/3/tv/${params.tvId}`)
+      .then((res) => {
+        const mvData = res.data;
+        console.log(mvData);
+        setMovie((prev) => ({
+          ...prev,
+          title: mvData.name,
+          poster: mvData.poster_path,
+          year: new Date(mvData.first_air_date).getFullYear(),
+          date: mvData.first_air_date,
+          vote: mvData.vote_average ? mvData.vote_average * 10 : 0,
+          vote_count: mvData.vote_count ? mvData.vote_count : 0,
+          tagline: mvData.tagline,
+          genres: mvData.genres,
+          overview: mvData.overview,
+          eps: mvData.number_of_episodes ? mvData.number_of_episodes : 0,
+          seasons: mvData.number_of_seasons ? mvData.number_of_seasons : 0,
+          countries: mvData.production_countries,
+        }));
+        axios
+          .get(`https://api.themoviedb.org/3/tv/${params.tvId}/credits`)
+          .then((creditsRes) => {
+            console.log(creditsRes.data);
+            const crew = creditsRes.data.crew;
+            setMovie((prev) => ({
+              ...prev,
+              crew: crew
+                ?.sort((a, b) => (a.popularity > b.popularity ? -1 : 1))
+                .slice(0, 6),
+            }));
+            setLoading(false);
+          })
+          .catch(() => {
+            setAlert({ open: true, message: "Failed to load!", type: "error" });
+          });
+      })
+      .catch(() => {
+        setAlert({ open: true, message: "Failed to load!", type: "error" });
+      });
   }, [params.tvId]);
 
   return (
@@ -313,6 +336,20 @@ const TVPage = () => {
           </Grid>
         </Box>
       )}
+      <Snackbar
+        open={alert.open}
+        autoHideDuration={5000}
+        onClose={handleClose}
+        TransitionComponent={Fade}
+      >
+        <Alert
+          onClose={handleClose}
+          severity={alert.type}
+          sx={{ width: "100%" }}
+        >
+          {alert.message}
+        </Alert>
+      </Snackbar>
     </Container>
   );
 };

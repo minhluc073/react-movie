@@ -2,12 +2,15 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import {
+  Alert,
   Box,
   Chip,
   CircularProgress,
   Container,
   Divider,
+  Fade,
   Grid,
+  Snackbar,
   Stack,
   Typography,
 } from "@mui/material";
@@ -42,6 +45,18 @@ const MoviePage = () => {
   const params = useParams();
   const [movie, setMovie] = useState({});
   const [loading, setLoading] = useState(true);
+    const [alert, setAlert] = useState({
+      open: false,
+      type: "info",
+      message: "Loading contents",
+    });
+
+    const handleClose = (event, reason) => {
+      if (reason === "clickaway") {
+        return;
+      }
+      setAlert((prev) => ({ ...prev, open: false }));
+    };
 
   useEffect(() => {
     function convertMin(totalMinutes) {
@@ -80,7 +95,13 @@ const MoviePage = () => {
                 .slice(0, 6),
             }));
             setLoading(false);
+          })
+          .catch(() => {
+            setAlert({ open: true, message: "Failed to load!", type: "error" });
           });
+      })
+      .catch(() => {
+        setAlert({ open: true, message: "Failed to load!", type: "error" });
       });
   }, [params.movieId]);
 
@@ -308,6 +329,20 @@ const MoviePage = () => {
           </Grid>
         </Box>
       )}
+      <Snackbar
+        open={alert.open}
+        autoHideDuration={5000}
+        onClose={handleClose}
+        TransitionComponent={Fade}
+      >
+        <Alert
+          onClose={handleClose}
+          severity={alert.type}
+          sx={{ width: "100%" }}
+        >
+          {alert.message}
+        </Alert>
+      </Snackbar>
     </Container>
   );
 };
