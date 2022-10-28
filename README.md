@@ -2,7 +2,7 @@
 
 Movie Loft is a web-based movie database client with a minimal user interface. It can be useful to obtain information about movies, television shows, and their specifics.
 
-![screenshot](/screenshot/screenshot1.png "screenshot")
+![screenshot](https://github.com/shinjith-dev/movie-loft/blob/main/screeenshot/screenshot1.png?raw=true "screenshot")
 
 ## Features
 
