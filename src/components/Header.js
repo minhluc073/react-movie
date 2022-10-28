@@ -11,7 +11,7 @@ const Header = ({ searchVal = "", setSearch }) => {
 
   const handleSearchSubmit = (e) => {
     if (e) e.preventDefault();
-    if (searchValue !== "") setSearch(searchValue, true);
+    if (searchValue.splice() !== "") setSearch(searchValue.splice(), true);
     else setSearch("", false);
   };
 
