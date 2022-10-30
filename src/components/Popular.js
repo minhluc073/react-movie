@@ -19,7 +19,7 @@ import { MdLocalMovies, MdOutlineLocalMovies } from "react-icons/md";
 
 const Popular = () => {
   const [movies, setMovies] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [type, setType] = useState("movie");
   const [alert, setAlert] = useState({
     open: false,
@@ -39,17 +39,17 @@ const Popular = () => {
   };
 
   useEffect(() => {
-    setLoading(true);
-    axios
-      .get(`https://api.themoviedb.org/3/${type}/popular`)
-      .then(async (res) => {
-        setMovies(res.data.results);
-        await sleep(1000);
-        setLoading(false);
-      })
-      .catch(() => {
-        setAlert({ open: true, message: "Failed to load!", type: "error" });
-      });
+    setLoading(true)
+     axios
+       .get(`https://api.themoviedb.org/3/${type}/popular`)
+       .then(async (res) => {
+         setMovies(res.data.results);
+         await sleep(1000);
+         setLoading(false);
+       })
+       .catch(() => {
+         setAlert({ open: true, message: "Failed to load!", type: "error" });
+       });
   }, [type, setAlert]);
 
   const handleScrollLeft = () => {
@@ -71,10 +71,12 @@ const Popular = () => {
   };
 
   const toLoad = () => {
-    if (loading)
+    if (loading) {
       return [...Array(20)].map((item, index) => (
         <MovieCardSkeleton key={`popularPreLoadSkelton_${index}`} marg={2} />
       ));
+    }
+     
     else if (movies.length > 0)
       return movies.map((movie) => (
         <Movie key={movie.id} marg={2} movie={movie} />
