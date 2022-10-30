@@ -1,16 +1,10 @@
+import { Container } from "@mui/material";
 import { useState } from "react";
 import Header from "./components/Header";
-import SearchResult from "./components/SearchResult";
-import axios from "axios";
-import Popular from "./components/Popular";
-import TopRated from "./components/TopRated";
 import NowPlaying from "./components/NowPlaying";
-import { Container } from "@mui/material";
-
-axios.defaults.headers.common[
-  "Authorization"
-] = `Bearer ${process.env.REACT_APP_TMDB_API_TOKEN}`;
-axios.defaults.headers.get["Content-Type"] = "application/json";
+import Popular from "./components/Popular";
+import SearchResult from "./components/SearchResult";
+import TopRated from "./components/TopRated";
 
 function HomePage() {
   const [showSearch, setShowSearch] = useState({

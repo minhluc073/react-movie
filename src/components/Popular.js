@@ -1,3 +1,4 @@
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import {
   Alert,
   Box,
@@ -7,19 +8,20 @@ import {
   Snackbar,
   Stack,
   Switch,
-  Typography,
+  Typography
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import Movie from "./MovieCard";
-import NavigateNextIcon from "@mui/icons-material/NavigateNext";
-import MovieCardSkeleton from "../ComponentSkeltons/MovieCardSkeleton";
-import { RiTvFill, RiTvLine } from "react-icons/ri";
 import { MdLocalMovies, MdOutlineLocalMovies } from "react-icons/md";
+import { RiTvFill, RiTvLine } from "react-icons/ri";
+import { useDispatch, useSelector } from "react-redux";
+import MovieCardSkeleton from "../ComponentSkeltons/MovieCardSkeleton";
+import { getPopular } from "../store/actions";
+import Movie from "./MovieCard";
 
 const Popular = () => {
-  const [movies, setMovies] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const { loading, popular } = useSelector((state) => state.popular);
+
   const [type, setType] = useState("movie");
   const [alert, setAlert] = useState({
     open: false,
@@ -34,23 +36,9 @@ const Popular = () => {
     setAlert((prev) => ({ ...prev, open: false }));
   };
 
-  const sleep = (milliseconds) => {
-    return new Promise((resolve) => setTimeout(resolve, milliseconds));
-  };
-
   useEffect(() => {
-    setLoading(true)
-     axios
-       .get(`https://api.themoviedb.org/3/${type}/popular`)
-       .then(async (res) => {
-         setMovies(res.data.results);
-         await sleep(1000);
-         setLoading(false);
-       })
-       .catch(() => {
-         setAlert({ open: true, message: "Failed to load!", type: "error" });
-       });
-  }, [type, setAlert]);
+    dispatch(getPopular(`/3/${type}/popular`));
+  }, [type]);
 
   const handleScrollLeft = () => {
     document.getElementById("popular-cont").scrollLeft += Math.min(
@@ -75,10 +63,8 @@ const Popular = () => {
       return [...Array(20)].map((item, index) => (
         <MovieCardSkeleton key={`popularPreLoadSkelton_${index}`} marg={2} />
       ));
-    }
-     
-    else if (movies.length > 0)
-      return movies.map((movie) => (
+    } else if (popular?.results?.length > 0)
+      return popular?.results?.map((movie) => (
         <Movie key={movie.id} marg={2} movie={movie} />
       ));
   };
