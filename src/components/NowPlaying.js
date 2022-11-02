@@ -16,10 +16,16 @@ import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import MovieCardSkeleton from "../ComponentSkeltons/MovieCardSkeleton";
 import { RiTvFill, RiTvLine } from "react-icons/ri";
 import { MdLocalMovies, MdOutlineLocalMovies } from "react-icons/md";
+import { useSelector, useDispatch } from "react-redux";
+import { getPlaying } from "../store/actions";
+
 
 const NowPlaying = () => {
-  const [movies, setMovies] = useState([]);
-  const [loading, setLoading] = useState(true);
+
+  const dispatch = useDispatch();
+  const { loading, playing } = useSelector((state) => state.playingReducer);
+  // console.log('playing',playing)
+  
   const [type, setType] = useState("movie");
     const [alert, setAlert] = useState({
       open: false,
@@ -38,22 +44,11 @@ const NowPlaying = () => {
   };
 
   useEffect(() => {
-    setLoading(true);
-    axios
-      .get(
-        `https://api.themoviedb.org/3/${type}/${
-          type === "movie" ? "now_playing" : "on_the_air"
-        }`
-      )
-      .then(async (res) => {
-        setMovies(res.data.results);
-        await sleep(1000);
-        setLoading(false);
-      })
-      .catch(() => {
-        setAlert({ open: true, message: "Failed to load!", type: "error" });
-      });
-  }, [type,setAlert]);
+    
+    dispatch(getPlaying(`/3/${type}/${
+      type === "movie" ? "now_playing" : "on_the_air"
+    }`));
+  }, [type]);
 
   const handleScrollLeft = () => {
     document.getElementById("nowplaying-cont").scrollLeft += Math.min(
@@ -78,8 +73,8 @@ const NowPlaying = () => {
       return [...Array(20)].map((item, index) => (
         <MovieCardSkeleton key={`NowPlayingPreLoadSkelton_${index}`} marg={2} />
       ));
-    else if (movies.length > 0)
-      return movies.map((movie) => (
+    else if (playing?.results?.length > 0)
+      return playing?.results?.map((movie) => (
         <Movie key={movie.id} marg={2} movie={movie} />
       ));
   };
