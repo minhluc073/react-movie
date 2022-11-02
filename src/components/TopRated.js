@@ -16,10 +16,13 @@ import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import MovieCardSkeleton from "../ComponentSkeltons/MovieCardSkeleton";
 import { RiTvFill, RiTvLine } from "react-icons/ri";
 import { MdLocalMovies, MdOutlineLocalMovies } from "react-icons/md";
+import { useSelector, useDispatch } from "react-redux";
+import { getTopRated } from "../store/actions";
 
 const TopRated = () => {
-  const [movies, setMovies] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
+  const { loading, rated} = useSelector((state)=> state.topRatedReducer)
+  // console.log(rated)
   const [type, setType] = useState("movie");
     const [alert, setAlert] = useState({
       open: false,
@@ -39,18 +42,8 @@ const TopRated = () => {
   };
 
   useEffect(() => {
-    setLoading(true);
-    axios
-      .get(`https://api.themoviedb.org/3/${type}/top_rated`)
-      .then(async (res) => {
-        setMovies(res.data.results);
-        await sleep(1000);
-        setLoading(false);
-      })
-      .catch(() => {
-        setAlert({ open: true, message: "Failed to load!", type: "error" });
-      });
-  }, [type,setAlert]);
+    dispatch(getTopRated(`3/${type}/top_rated`))
+  }, [type]);
 
   const handleScrollLeft = () => {
     document.getElementById("toprated-cont").scrollLeft += Math.min(
@@ -75,8 +68,8 @@ const TopRated = () => {
       return [...Array(20)].map((item, index) => (
         <MovieCardSkeleton key={`TopRatedPreLoadSkelton_${index}`} marg={2} />
       ));
-    else if (movies.length > 0)
-      return movies.map((movie) => (
+    else if (rated?.results?.length > 0)
+      return rated?.results?.map((movie) => (
         <Movie key={movie.id} marg={2} movie={movie} />
       ));
   };

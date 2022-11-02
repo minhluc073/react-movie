@@ -16,4 +16,15 @@ export const request = {
       console.log('url', url)
     return instance.get(`${url}`);
   },
+  //playingMovie
+  async getPlayingMovie(url) {
+    console.log('url', url)
+  return instance.get(`${url}`);
+},
+//top rated
+async getTopRatedMovie(url) {
+  console.log('url', url)
+  return instance.get(`${url}`);
+},
+
 };
